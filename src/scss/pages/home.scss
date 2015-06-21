@@ -1,14 +1,22 @@
 #Home {
-  .title {
-    font: font(medium);
-    text-align: center;
-    color: color(black);
-    text-transform: uppercase;
-    letter-spacing: ws(small);
+  .wrapper {
+    margin-top: ws(large);
 
-    position: absolute;
-    top: 46%;
-    left: 0;
-    right: 0;
+    .view-gh {
+      display: inline-block;
+      color: color(grey);
+      transition: color 0.1s;
+
+      &:hover {
+        color: color(black);
+      }
+    }
+
+    .title {
+      font: font(medium);
+      color: color(black);
+      text-transform: uppercase;
+      letter-spacing: ws(tiny);
+    }
   }
 }
