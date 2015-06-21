@@ -128,6 +128,10 @@
   background: #302D2F;
   color: #FFFFFF; }
 
+html, body {
+  width: 100%;
+  height: 100%; }
+
 body {
   font: 16px/1.4 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
   color: #302D2F;
@@ -144,13 +148,17 @@ a {
   display: table;
   clear: both; }
 
-#Home .title {
-  font: 1.6rem/1.2 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
-  text-align: center;
-  color: #302D2F;
-  text-transform: uppercase;
-  letter-spacing: 0.8rem;
-  position: absolute;
-  top: 46%;
-  left: 0;
-  right: 0; }
+#Home .wrapper {
+  margin-top: 3rem; }
+  #Home .wrapper .view-gh {
+    display: inline-block;
+    color: #A0999E;
+    -webkit-transition: color 0.1s;
+            transition: color 0.1s; }
+    #Home .wrapper .view-gh:hover {
+      color: #302D2F; }
+  #Home .wrapper .title {
+    font: 1.6rem/1.2 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
+    color: #302D2F;
+    text-transform: uppercase;
+    letter-spacing: 0.4rem; }
