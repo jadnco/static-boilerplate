@@ -1,5 +1,15 @@
 # Boilerplate
 
+[![forthebadge](http://forthebadge.com/images/badges/powered-by-netflix.svg)](http://forthebadge.com)
+
+A starting point for creating static websites. It uses Gulp to compile Sass, Handlebars partials and bundle JavaScripts into a distribution folder.
+
+Install all dependencies using npm:
+
+```sh
+npm install
+```
+
 Run the default Gulp task to get started:
 
 ```sh
