@@ -1,0 +1,1 @@
+var yolo=function(o){console.log(o+" is cool!")};yolo("Jaden");
