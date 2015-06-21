@@ -1,0 +1,27 @@
+$font-family: Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
+
+$colors: (
+  white: #FFFFFF, 
+  pearl: #F9FBFB,
+  light: #E6F0F0,
+  grey: #A0999E,
+  black: #302D2F,
+  plum: #8E4585,
+  green: #579F46,
+  red: #9F4646
+);
+
+$whitespace: (
+  huge: 6rem,
+  large: 3rem,
+  medium: 2rem,
+  small: 0.8rem,
+  tiny: 0.4rem
+);
+
+$font-size: (
+  default: 16px/1.4,
+  large: 3rem/1.0,
+  medium: 1.6rem/1.2,
+  tiny: 0.5rem/1.4
+);
