@@ -148,17 +148,22 @@ a {
   display: table;
   clear: both; }
 
-#Home .wrapper {
-  margin-top: 3rem; }
-  #Home .wrapper .view-gh {
-    display: inline-block;
-    color: #A0999E;
-    -webkit-transition: color 0.1s;
-            transition: color 0.1s; }
-    #Home .wrapper .view-gh:hover {
-      color: #302D2F; }
-  #Home .wrapper .title {
-    font: 1.6rem/1.2 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
-    color: #302D2F;
-    text-transform: uppercase;
-    letter-spacing: 0.4rem; }
+#Home {
+  width: 100%;
+  height: 100%;
+  background: url(../images/water.jpeg);
+  background-size: cover; }
+  #Home .wrapper {
+    margin-top: 3rem; }
+    #Home .wrapper .view-gh {
+      display: inline-block;
+      color: #A0999E;
+      -webkit-transition: color 0.1s;
+              transition: color 0.1s; }
+      #Home .wrapper .view-gh:hover {
+        color: #FFFFFF; }
+    #Home .wrapper .title {
+      font: 1.6rem/1.2 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: 0.4rem; }
