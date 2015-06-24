@@ -4,6 +4,8 @@
 
 A starting point for creating static websites. It uses Gulp to compile Sass, Handlebars partials and bundle JavaScripts into a distribution folder.
 
+### Getting Started
+
 Install all dependencies using npm:
 
 ```sh
@@ -31,3 +33,11 @@ If you are working within a GitHub repo you can deploy your project, at any time
 ```sh
 gulp deploy
 ```
+
+---
+
+### Credits
+
+- Image by [Alex Wigan](https://unsplash.com/alwig64)
+- Responsive grid from [Skeleton](http://getskeleton.com) by [Dave Gamache](https://github.com/dhg)
+
