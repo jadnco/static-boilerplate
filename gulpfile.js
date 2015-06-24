@@ -1,4 +1,5 @@
 var gulp        = require('gulp'),
+    del         = require('del'),
     util        = require('gulp-util'),
     sass        = require('gulp-sass'),
     prefixer    = require('gulp-autoprefixer'),
@@ -70,10 +71,20 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('dist/js/libs'));
 });
 
+gulp.task('images', function() {
+  gulp.src(['src/images/**/*.{jpg,png,gif}'])
+    .pipe(gulp.dest('dist/images'));
+});
+
+gulp.task('clean:images', function(a) {
+  del(['dist/images/**/*.{jpg,png,gif}'], a);
+});
+
 gulp.task('watch', function() {
   gulp.watch('src/scss/**/*.scss', ['styles']);
   gulp.watch('src/js/**/*.js', ['scripts']);
   gulp.watch('src/**/*.hbs', ['templates']);
+  gulp.watch('src/images/**/*.{jpg,png,gif}', ['clean:images', 'images']);
 });
 
 gulp.task('deploy', function() {
@@ -81,4 +92,4 @@ gulp.task('deploy', function() {
     .pipe(ghPages());
 });
 
-gulp.task('default', ['watch','serve', 'styles', 'scripts', 'templates']);
+gulp.task('default', ['watch', 'serve', 'images', 'styles', 'scripts', 'templates']);
