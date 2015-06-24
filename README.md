@@ -6,6 +6,18 @@ A starting point for creating static websites. It uses Gulp to compile Sass, Han
 
 ### Getting Started
 
+Clone the repo using `git clone` or by clicking the *Download ZIP* button to the right.
+
+```sh
+git clone https://github.com/jadnco/boilerplate.git
+```
+
+Navigate to the directory to where it was cloned.
+
+```sh
+cd boilerplate
+```
+
 Install all dependencies using npm:
 
 ```sh
@@ -33,8 +45,6 @@ If you are working within a GitHub repo you can deploy your project, at any time
 ```sh
 gulp deploy
 ```
-
----
 
 ### Credits
 
