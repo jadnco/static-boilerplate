@@ -9,10 +9,10 @@ var gulp        = require('gulp'),
     handlebars  = require('gulp-compile-handlebars'),
     browserSync = require('browser-sync'),
     ghPages     = require('gulp-gh-pages');
-
+var distrubution = '../../placidity';
 gulp.task('serve', function() {
   browserSync.init({
-    server: './dist',
+    server: distrubution,
     open: false,
     notify: false
   });
@@ -24,7 +24,7 @@ gulp.task('styles', function() {
     .on('error', util.log)
     .pipe(prefixer('last 2 versions'))
     .on('error', util.log)
-    .pipe(gulp.dest('dist/css/'))
+    .pipe(gulp.dest(distrubution+'/css/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
@@ -44,7 +44,7 @@ gulp.task('templates', function() {
       extname: '.html'
     }))
     .on('error', util.log)
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest(distrubution+'/'));
 });
 
 /*
@@ -56,7 +56,7 @@ gulp.task('scripts', function() {
     .on('error', util.log)
     .pipe(uglify())
     .on('error', util.log)
-    .pipe(gulp.dest('dist/js/'));
+    .pipe(gulp.dest(distrubution+'/js/'));
 
   /*
   * Uglify JS libs and move to dist folder
@@ -68,16 +68,16 @@ gulp.task('scripts', function() {
       suffix: '.min'
     }))
     .on('error', util.log)
-    .pipe(gulp.dest('dist/js/libs'));
+    .pipe(gulp.dest(distrubution+'/js/libs'));
 });
 
 gulp.task('images', function() {
   gulp.src(['src/images/**/*.{jpg,jpeg,svg,png,gif}'])
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest(distrubution+'/images'));
 });
 
 gulp.task('clean:images', function(a) {
-  del(['dist/images/**/*.{jpg,jpeg,svg,png,gif}'], a);
+  del([distrubution+'/images/**/*.{jpg,jpeg,svg,png,gif}'], a);
 });
 
 gulp.task('watch', function() {
@@ -88,7 +88,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', function() {
-  gulp.src(['dist/**/*'])
+  gulp.src([distrubution+'/**/*'])
     .pipe(ghPages());
 });
 
