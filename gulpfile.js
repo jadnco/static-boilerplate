@@ -44,7 +44,8 @@ gulp.task('templates', function() {
       extname: '.html'
     }))
     .on('error', util.log)
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/'))
+    .pipe(browserSync.reload({stream: true}));;
 });
 
 /*
