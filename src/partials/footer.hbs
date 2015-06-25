@@ -1,6 +1,16 @@
     </main>
-    <script src="js/libs/jquery.min.js"></script>
 
-    <script src="js/bundle.js"></script>
+    {{ghost_foot}}
+
+    <script src="{{asset 'js/libs/jquery.min.js'}}"></script>
+
+    <script src="{{asset 'js/bundle.js'}}"></script>
+
+    <!-- For BrowserSync -->
+    <script type='text/javascript' id="__bs_script__">
+        //<![CDATA[
+            document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.7.12.js'><\/script>".replace("HOST", location.hostname));
+        //]]>
+    </script>
   </body>
 </html>

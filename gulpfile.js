@@ -6,15 +6,14 @@ var gulp        = require('gulp'),
     uglify      = require('gulp-uglify'),
     concat      = require('gulp-concat'),
     rename      = require('gulp-rename'),
-    handlebars  = require('gulp-compile-handlebars'),
     browserSync = require('browser-sync'),
     ghPages     = require('gulp-gh-pages');
 
-var dist = './dist';
+var dist = '.';
 
 gulp.task('serve', function() {
   browserSync.init({
-    server: dist,
+    logSnippet: false,
     open: false,
     notify: false
   });
@@ -26,7 +25,7 @@ gulp.task('styles', function() {
     .on('error', util.log)
     .pipe(prefixer('last 2 versions'))
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/css/'))
+    .pipe(gulp.dest(dist + '/assets/css/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
@@ -34,19 +33,12 @@ gulp.task('styles', function() {
 * Compile handlebars/partials into html
 */
 gulp.task('templates', function() {
-  var opts = {
-    ignorePartials: true,
-    batch: ['src/partials']
-  };
-
   gulp.src(['src/*.hbs'])
-    .pipe(handlebars(null, opts))
-    .on('error', util.log)
-    .pipe(rename({
-      extname: '.html'
-    }))
-    .on('error', util.log)
     .pipe(gulp.dest(dist))
+    .pipe(browserSync.reload({stream: true}));
+
+  gulp.src(['src/partials/*.hbs'])
+    .pipe(gulp.dest(dist + '/partials/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
@@ -59,7 +51,7 @@ gulp.task('scripts', function() {
     .on('error', util.log)
     .pipe(uglify())
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/js/'));
+    .pipe(gulp.dest(dist + '/assets/js/'));
 
   /*
   * Uglify JS libs and move to dist folder
@@ -71,12 +63,12 @@ gulp.task('scripts', function() {
       suffix: '.min'
     }))
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/js/libs'));
+    .pipe(gulp.dest(dist + '/assets/js/libs'));
 });
 
 gulp.task('images', function() {
   gulp.src(['src/images/**/*.{jpg,jpeg,svg,png,gif}'])
-    .pipe(gulp.dest(dist + '/images'));
+    .pipe(gulp.dest(dist + '/assets/images'));
 });
 
 gulp.task('clean:images', function(a) {
@@ -91,8 +83,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', function() {
-  gulp.src([dist + '/**/*'])
-    .pipe(ghPages());
+  gulp.src(['**/*.hbs', '**/{images,css,js}/*', 'package.json', '!src/**/*', '!node_modules/**/*'])
+    .pipe(ghPages({branch: 'release'}));
 });
 
 gulp.task('default', ['watch', 'serve', 'images', 'styles', 'scripts', 'templates']);
