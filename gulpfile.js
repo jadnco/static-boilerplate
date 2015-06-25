@@ -72,7 +72,7 @@ gulp.task('images', function() {
 });
 
 gulp.task('clean:images', function(a) {
-  del([dist + '/images/**/*.{jpg,jpeg,svg,png,gif}'], a);
+  del([dist + '/assets/images/**/*.{jpg,jpeg,svg,png,gif}'], a);
 });
 
 gulp.task('watch', function() {
