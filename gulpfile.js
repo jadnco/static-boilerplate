@@ -10,7 +10,7 @@ var gulp        = require('gulp'),
     browserSync = require('browser-sync'),
     ghPages     = require('gulp-gh-pages');
 
-var dist = './dist/';
+var dist = './dist';
 
 gulp.task('serve', function() {
   browserSync.init({
