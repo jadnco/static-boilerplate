@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: color(black);
+  color: color(white);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font: font(default);
+  color: color(black);
+  background: color(pearl);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.cf {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
