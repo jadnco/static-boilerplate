@@ -1,6 +1,6 @@
 # Boilerplate - Ghost
 
-[![forthebadge](http://forthebadge.com/images/badges/powered-by-netflix.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)
 
 A starting point for creating Ghost themes. It uses Gulp to compile Sass, Handlebars partials and bundle JavaScripts into a distribution folder.
 
