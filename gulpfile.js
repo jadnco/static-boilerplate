@@ -9,7 +9,7 @@ var gulp        = require('gulp'),
     browserSync = require('browser-sync'),
     ghPages     = require('gulp-gh-pages');
 
-var dist = './';
+var dist = '.';
 
 gulp.task('serve', function() {
   browserSync.init({
@@ -83,8 +83,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', function() {
-  gulp.src([dist + '/**/*'])
-    .pipe(ghPages());
+  gulp.src(['**/*.hbs', '**/{images,css,js}/*', 'package.json', '!src/**/*', '!node_modules/**/*'])
+    .pipe(ghPages({branch: 'release'}));
 });
 
 gulp.task('default', ['watch', 'serve', 'images', 'styles', 'scripts', 'templates']);
