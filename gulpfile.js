@@ -13,7 +13,7 @@ var dist = '.';
 
 gulp.task('serve', function() {
   browserSync.init({
-    //server: dist,
+    logSnippet: false,
     open: false,
     notify: false
   });
