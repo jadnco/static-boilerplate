@@ -3,3 +3,9 @@ node_modules/*
 npm-debug.log
 dist/*
 .publish
+*.log
+
+*.hbs
+partials/*
+!src/**/*.hbs
+assets/*
