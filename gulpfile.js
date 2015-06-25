@@ -45,7 +45,7 @@ gulp.task('templates', function() {
     }))
     .on('error', util.log)
     .pipe(gulp.dest('dist/'))
-    .pipe(browserSync.reload({stream: true}));;
+    .pipe(browserSync.reload({stream: true}));
 });
 
 /*
