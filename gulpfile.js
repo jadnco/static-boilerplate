@@ -8,7 +8,8 @@ var gulp        = require('gulp'),
     rename      = require('gulp-rename'),
     handlebars  = require('gulp-compile-handlebars'),
     browserSync = require('browser-sync'),
-    ghPages     = require('gulp-gh-pages');
+    ghPages     = require('gulp-gh-pages'),
+    sassGlob    = require('gulp-sass-bulk-import');;
 
 var dist = './dist';
 
@@ -22,7 +23,11 @@ gulp.task('serve', function() {
 
 gulp.task('styles', function() {
   gulp.src(['src/scss/main.scss'])
-    .pipe(sass())
+    .pipe(sassGlob())
+    .on('error', util.log)
+    .pipe(sass({
+      includePaths: ['src/scss']
+    }))
     .on('error', util.log)
     .pipe(prefixer('last 2 versions'))
     .on('error', util.log)

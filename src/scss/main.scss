@@ -2,9 +2,8 @@
   "base/variables",
   "base/functions",
   "base/grid",
-  "base/base",
+  "base/base";
 
-  "components/header",
-  "components/footer",
+@import "components/*";
 
-  "pages/home";
+@import "pages/**/*";
