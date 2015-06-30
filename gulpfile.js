@@ -9,7 +9,7 @@ var gulp        = require('gulp'),
     handlebars  = require('gulp-compile-handlebars'),
     browserSync = require('browser-sync'),
     ghPages     = require('gulp-gh-pages'),
-    sassGlob    = require('gulp-sass-bulk-import');;
+    sassGlob    = require('gulp-sass-bulk-import');
 
 var dist = './dist';
 
