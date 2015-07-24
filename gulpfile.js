@@ -96,7 +96,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', function() {
-  gulp.src([dist + '/**/*'])
+  return gulp.src([dist + '/**/*'])
     .pipe(ghPages());
 });
 
