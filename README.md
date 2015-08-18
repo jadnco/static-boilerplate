@@ -48,6 +48,5 @@ gulp deploy
 
 ### Credits
 
-- Image by [Alex Wigan](https://unsplash.com/alwig64)
 - Responsive grid from [Skeleton](http://getskeleton.com) by [Dave Gamache](https://github.com/dhg)
 
