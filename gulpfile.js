@@ -62,7 +62,7 @@ gulp.task('templates', function() {
     batch: ['src/partials']
   };
 
-  gulp.src([paths.src.templates])
+  gulp.src([paths.src.root + '/*.hbs'])
     .pipe(handlebars(null, opts))
     .on('error', util.log)
     .pipe(rename({
