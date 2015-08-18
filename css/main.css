@@ -42,7 +42,7 @@
 @media (min-width: 1000px) {
   .inner {
     width: 90%;
-    padding: 0 0.8rem;
+    padding: 0 1.2rem;
     box-sizing: content-box; }
   .column, .columns {
     margin-left: 4%; }
@@ -133,9 +133,9 @@ html, body {
   height: 100%; }
 
 body {
-  font: 16px/1.4 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
+  font: 16px/1.35 Work Sans, San Francisco, sans-serif;
   color: #302D2F;
-  background: #F9FBFB; }
+  background: #FFFFFF; }
 
 a {
   color: inherit;
@@ -148,22 +148,54 @@ a {
   display: table;
   clear: both; }
 
-#Home {
+h1, h2, h3 {
+  font-weight: 500 !important; }
+
+h1 {
+  font: 3rem/1.2 Work Sans, San Francisco, sans-serif; }
+
+h2 {
+  font: 3rem/1.2 Work Sans, San Francisco, sans-serif; }
+
+h3 {
+  font: 2.2rem/1.2 Work Sans, San Francisco, sans-serif; }
+
+@media (min-width: 750px) {
+  h1 {
+    font: 5rem/1.0 Work Sans, San Francisco, sans-serif; } }
+
+@media (min-width: 1000px) {
+  h1 {
+    font: 8rem/1.05 Work Sans, San Francisco, sans-serif; }
+  h2 {
+    font: 5rem/1.0 Work Sans, San Francisco, sans-serif; }
+  h3 {
+    font: 3rem/1.2 Work Sans, San Francisco, sans-serif; } }
+
+#Boilerplate {
   width: 100%;
   height: 100%;
-  background: url(../images/water.jpeg);
-  background-size: cover; }
-  #Home .wrapper {
-    margin-top: 3rem; }
-    #Home .wrapper .view-gh {
+  background: #FFFFFF; }
+  #Boilerplate .wrapper {
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1; }
+    #Boilerplate .wrapper:after {
+      content: "";
+      position: absolute;
+      bottom: 0%;
+      display: block;
+      width: 100%;
+      height: 50%;
+      background: #00FF9F;
+      z-index: -1; }
+    #Boilerplate .wrapper .view-gh {
       display: inline-block;
       color: #A0999E;
       -webkit-transition: color 0.1s;
               transition: color 0.1s; }
-      #Home .wrapper .view-gh:hover {
+      #Boilerplate .wrapper .view-gh:hover {
         color: #FFFFFF; }
-    #Home .wrapper .title {
-      font: 1.6rem/1.2 Proxima Nova, San Francisco, Helvetica Neue, sans-serif;
-      color: #FFFFFF;
-      text-transform: uppercase;
-      letter-spacing: 0.4rem; }
+    #Boilerplate .wrapper .title {
+      color: #302D2F;
+      text-transform: uppercase; }
