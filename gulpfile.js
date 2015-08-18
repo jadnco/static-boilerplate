@@ -16,7 +16,7 @@ var paths = {
   dist: { root: 'dist' },
   init: function() {
     this.src.sass        = this.src.root + '/scss/main.scss';
-    this.src.templates   = this.src.root + '/*.hbs';
+    this.src.templates   = this.src.root + '/**/*.hbs';
     this.src.javascript  = [this.src.root + '/js/**/*.js','!' + this.src.root + '/js/libs/*.js'];
     this.src.libs        = this.src.root + '/js/libs/*.js';
     this.src.images      = this.src.root + '/images/**/*.{jpg,jpeg,svg,png,gif}';
@@ -116,7 +116,7 @@ gulp.task('clean:files', function(a) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.src.sass, ['styles']);
+  gulp.watch('src/scss/**/*.scss', ['styles']);
   gulp.watch(paths.src.javascript, ['scripts']);
   gulp.watch(paths.src.templates, ['templates']);
   gulp.watch(paths.src.files, ['clean:files', 'files']);
