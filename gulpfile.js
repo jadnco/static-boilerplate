@@ -1,15 +1,18 @@
-var gulp        = require('gulp'),
-    del         = require('del'),
-    util        = require('gulp-util'),
-    sass        = require('gulp-sass'),
-    prefixer    = require('gulp-autoprefixer'),
-    uglify      = require('gulp-uglify'),
-    concat      = require('gulp-concat'),
-    rename      = require('gulp-rename'),
-    handlebars  = require('gulp-compile-handlebars'),
-    browserSync = require('browser-sync'),
-    ghPages     = require('gulp-gh-pages'),
-    sassGlob    = require('gulp-sass-bulk-import');
+'use strict';
+
+const gulp        = require('gulp');
+const del         = require('del');
+const util        = require('gulp-util');
+const sass        = require('gulp-sass');
+const prefixer    = require('gulp-autoprefixer');
+const uglify      = require('gulp-uglify');
+const concat      = require('gulp-concat');
+const rename      = require('gulp-rename');
+const handlebars  = require('gulp-compile-handlebars');
+const browserSync = require('browser-sync');
+const ghPages     = require('gulp-gh-pages');
+const sassGlob    = require('gulp-sass-bulk-import');
+const watch       = require('gulp-watch');
 
 var paths = {
   src: { root: 'src' },
@@ -17,7 +20,7 @@ var paths = {
   init: function() {
     this.src.sass        = this.src.root + '/scss/main.scss';
     this.src.templates   = this.src.root + '/**/*.hbs';
-    this.src.javascript  = [this.src.root + '/js/**/*.js','!' + this.src.root + '/js/libs/*.js'];
+    this.src.javascript  = [this.src.root + '/js/**/*.js', '!' + this.src.root + '/js/libs/*.js'];
     this.src.libs        = this.src.root + '/js/libs/*.js';
     this.src.images      = this.src.root + '/images/**/*.{jpg,jpeg,svg,png,gif}';
     this.src.files       = this.src.root + '/*.{html,txt}';
@@ -26,25 +29,28 @@ var paths = {
     this.dist.images     = this.dist.root + '/images';
     this.dist.javascript = this.dist.root + '/js';
     this.dist.libs       = this.dist.root + '/js/libs';
-    
+
     return this;
-  }
+  },
 }.init();
 
-gulp.task('serve', function() {
+gulp.task('serve', () => {
   browserSync.init({
     server: paths.dist.root,
     open: false,
-    notify: false
+    notify: false,
+
+    // Whether to listen on external
+    online: false,
   });
 });
 
-gulp.task('styles', function() {
+gulp.task('styles', () => {
   gulp.src([paths.src.sass])
     .pipe(sassGlob())
     .on('error', util.log)
     .pipe(sass({
-      includePaths: ['src/scss']
+      includePaths: ['src/scss'],
     }))
     .on('error', util.log)
     .pipe(prefixer('last 2 versions'))
@@ -56,17 +62,17 @@ gulp.task('styles', function() {
 /*
 * Compile handlebars/partials into html
 */
-gulp.task('templates', function() {
+gulp.task('templates', () => {
   var opts = {
     ignorePartials: true,
-    batch: ['src/partials']
+    batch: ['src/partials'],
   };
 
   gulp.src([paths.src.root + '/*.hbs'])
     .pipe(handlebars(null, opts))
     .on('error', util.log)
     .pipe(rename({
-      extname: '.html'
+      extname: '.html',
     }))
     .on('error', util.log)
     .pipe(gulp.dest(paths.dist.root))
@@ -76,7 +82,7 @@ gulp.task('templates', function() {
 /*
 * Bundle all javascript files
 */
-gulp.task('scripts', function() {
+gulp.task('scripts', () => {
   gulp.src(paths.src.javascript)
     .pipe(concat('bundle.js'))
     .on('error', util.log)
@@ -91,39 +97,37 @@ gulp.task('scripts', function() {
     .pipe(uglify())
     .on('error', util.log)
     .pipe(rename({
-      suffix: '.min'
+      suffix: '.min',
     }))
     .on('error', util.log)
     .pipe(gulp.dest(paths.dist.libs));
 });
 
-gulp.task('images', function() {
+gulp.task('images', () => {
   gulp.src([paths.src.images])
     .pipe(gulp.dest(paths.dist.images));
 });
 
-gulp.task('clean:images', function(a) {
-  del([paths.dist.images], a);
-});
-
-gulp.task('files', function() {
+gulp.task('files', () => {
   gulp.src([paths.src.files])
     .pipe(gulp.dest(paths.dist.root));
 });
 
-gulp.task('clean:files', function(a) {
-  del([paths.dist.root + '/*.{html,txt}'], a);
+watch(paths.src.images, () => {
+  gulp.start('images');
 });
 
-gulp.task('watch', function() {
+watch(paths.src.files, () => {
+  gulp.start('files');
+});
+
+gulp.task('watch', () => {
   gulp.watch('src/scss/**/*.scss', ['styles']);
   gulp.watch(paths.src.javascript, ['scripts']);
   gulp.watch(paths.src.templates, ['templates']);
-  gulp.watch(paths.src.files, ['clean:files', 'files']);
-  gulp.watch(paths.src.images, ['clean:images', 'images']);
 });
 
-gulp.task('deploy', function() {
+gulp.task('deploy', () => {
   return gulp.src([paths.dist.root + '/**/*'])
     .pipe(ghPages());
 });
