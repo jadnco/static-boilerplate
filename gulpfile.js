@@ -13,6 +13,7 @@ const browserSync = require('browser-sync');
 const ghPages     = require('gulp-gh-pages');
 const sassGlob    = require('gulp-sass-bulk-import');
 const watch       = require('gulp-watch');
+const babel       = require('gulp-babel');
 
 var paths = {
   src: { root: 'src' },
@@ -84,6 +85,9 @@ gulp.task('templates', () => {
 */
 gulp.task('scripts', () => {
   gulp.src(paths.src.javascript)
+    .pipe(babel({
+      presets: ['es2015'],
+    }))
     .pipe(concat('bundle.js'))
     .on('error', util.log)
     .pipe(uglify())
