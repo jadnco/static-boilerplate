@@ -1,90 +1,135 @@
-var gulp        = require('gulp'),
-    del         = require('del'),
-    util        = require('gulp-util'),
-    sass        = require('gulp-sass'),
-    prefixer    = require('gulp-autoprefixer'),
-    uglify      = require('gulp-uglify'),
-    concat      = require('gulp-concat'),
-    rename      = require('gulp-rename'),
-    browserSync = require('browser-sync'),
-    ghPages     = require('gulp-gh-pages');
+'use strict';
 
-var dist = '.';
+const gulp        = require('gulp');
+const del         = require('del');
+const util        = require('gulp-util');
+const sass        = require('gulp-sass');
+const prefixer    = require('gulp-autoprefixer');
+const uglify      = require('gulp-uglify');
+const concat      = require('gulp-concat');
+const rename      = require('gulp-rename');
+const handlebars  = require('gulp-compile-handlebars');
+const browserSync = require('browser-sync');
+const ghPages     = require('gulp-gh-pages');
+const sassGlob    = require('gulp-sass-bulk-import');
+const watch       = require('gulp-watch');
+const babel       = require('gulp-babel');
 
-gulp.task('serve', function() {
+var paths = {
+  src: { root: 'src' },
+  dist: { root: '.' },
+  init: function() {
+    this.src.sass        = this.src.root + '/scss/main.scss';
+    this.src.templates   = this.src.root + '/**/*.hbs';
+    this.src.javascript  = [this.src.root + '/js/**/*.js', '!' + this.src.root + '/js/libs/*.js'];
+    this.src.libs        = this.src.root + '/js/libs/*.js';
+    this.src.images      = this.src.root + '/images/**/*.{jpg,jpeg,svg,png,gif}';
+    this.src.files       = this.src.root + '/*.{html,txt}';
+
+    this.dist.css        = this.dist.root + '/assets/css';
+    this.dist.images     = this.dist.root + '/assets/images';
+    this.dist.javascript = this.dist.root + '/assets/js';
+    this.dist.libs       = this.dist.root + '/assets/js/libs';
+
+    return this;
+  },
+}.init();
+
+gulp.task('serve', () => {
   browserSync.init({
-    logSnippet: false,
+    server: paths.dist.root,
     open: false,
-    notify: false
+    notify: false,
+
+    // Whether to listen on external
+    online: false,
   });
 });
 
-gulp.task('styles', function() {
-  gulp.src(['src/scss/main.scss'])
-    .pipe(sass())
+gulp.task('styles', () => {
+  gulp.src([paths.src.sass])
+    .pipe(sassGlob())
+    .on('error', util.log)
+    .pipe(sass({
+      includePaths: ['src/scss'],
+    }))
     .on('error', util.log)
     .pipe(prefixer('last 2 versions'))
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/assets/css/'))
+    .pipe(gulp.dest(paths.dist.css))
     .pipe(browserSync.reload({stream: true}));
 });
 
 /*
 * Compile handlebars/partials into html
 */
-gulp.task('templates', function() {
-  gulp.src(['src/*.hbs'])
-    .pipe(gulp.dest(dist))
+gulp.task('templates', () => {
+
+  gulp.src([paths.src.root + '/*.hbs'])
+    .pipe(gulp.dest(paths.dist.root))
     .pipe(browserSync.reload({stream: true}));
 
   gulp.src(['src/partials/*.hbs'])
-    .pipe(gulp.dest(dist + '/partials/'))
+    .pipe(gulp.dest(paths.dist.root + '/partials/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
 /*
 * Bundle all javascript files
 */
-gulp.task('scripts', function() {
-  gulp.src(['src/js/**/*.js', '!src/js/libs/*.js'])
+gulp.task('scripts', () => {
+  gulp.src(paths.src.javascript)
+    .pipe(babel({
+      presets: ['es2015'],
+    }))
     .pipe(concat('bundle.js'))
     .on('error', util.log)
     .pipe(uglify())
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/assets/js/'));
+    .pipe(gulp.dest(paths.dist.javascript))
+    .pipe(browserSync.reload({stream: true}));
 
   /*
   * Uglify JS libs and move to dist folder
   */
-  gulp.src(['src/js/libs/*.js'])
+  gulp.src([paths.src.libs])
     .pipe(uglify())
     .on('error', util.log)
     .pipe(rename({
-      suffix: '.min'
+      suffix: '.min',
     }))
     .on('error', util.log)
-    .pipe(gulp.dest(dist + '/assets/js/libs'));
+    .pipe(gulp.dest(paths.dist.libs))
+    .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('images', function() {
-  gulp.src(['src/images/**/*.{jpg,jpeg,svg,png,gif}'])
-    .pipe(gulp.dest(dist + '/assets/images'));
+gulp.task('images', () => {
+  gulp.src([paths.src.images])
+    .pipe(gulp.dest(paths.dist.images));
 });
 
-gulp.task('clean:images', function(a) {
-  del([dist + '/assets/images/**/*.{jpg,jpeg,svg,png,gif}'], a);
+gulp.task('files', () => {
+  gulp.src([paths.src.files])
+    .pipe(gulp.dest(paths.dist.root));
 });
 
-gulp.task('watch', function() {
+watch(paths.src.images, () => {
+  gulp.start('images');
+});
+
+watch(paths.src.files, () => {
+  gulp.start('files');
+});
+
+gulp.task('watch', () => {
   gulp.watch('src/scss/**/*.scss', ['styles']);
-  gulp.watch('src/js/**/*.js', ['scripts']);
-  gulp.watch('src/**/*.hbs', ['templates']);
-  gulp.watch('src/images/**/*.{jpg,jpeg,svg,png,gif}', ['clean:images', 'images']);
+  gulp.watch(paths.src.javascript, ['scripts']);
+  gulp.watch(paths.src.templates, ['templates']);
 });
 
-gulp.task('deploy', function() {
-  gulp.src(['**/*.hbs', '**/{images,css,js}/*', 'package.json', '!src/**/*', '!node_modules/**/*'])
-    .pipe(ghPages({branch: 'release'}));
+gulp.task('deploy', () => {
+  return gulp.src([paths.dist.root + '/**/*'])
+    .pipe(ghPages());
 });
 
-gulp.task('default', ['watch', 'serve', 'images', 'styles', 'scripts', 'templates']);
+gulp.task('default', ['watch', 'serve', 'images', 'files', 'styles', 'scripts', 'templates']);

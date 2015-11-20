@@ -2,7 +2,13 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)
 
-A starting point for creating Ghost themes. It uses Gulp to compile Sass, Handlebars partials and bundle JavaScripts into a distribution folder.
+A starting point for creating Ghost themes.
+
+Features:
+* Sass/SCSS
+* Handlebars templating
+* ES6 minification & bundling
+* Live injection/reload with BrowserSync 
 
 ### Getting Started
 
@@ -38,5 +44,4 @@ gulp deploy
 
 ### Credits
 
-- Image by [Alex Wigan](https://unsplash.com/alwig64)
 - Responsive grid from [Skeleton](http://getskeleton.com) by [Dave Gamache](https://github.com/dhg)
