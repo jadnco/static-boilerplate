@@ -2,7 +2,13 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/powered-by-netflix.svg)](http://forthebadge.com)
 
-A starting point for creating static websites. It uses Gulp to compile Sass, Handlebars partials and bundle JavaScripts into a distribution folder.
+A starting point for creating static websites.
+
+Features:
+* Sass/SCSS
+* Handlebars templating
+* ES6 minification & bundling
+* Live injection/reload with BrowserSync 
 
 ### Getting Started
 

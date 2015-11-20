@@ -92,7 +92,8 @@ gulp.task('scripts', () => {
     .on('error', util.log)
     .pipe(uglify())
     .on('error', util.log)
-    .pipe(gulp.dest(paths.dist.javascript));
+    .pipe(gulp.dest(paths.dist.javascript))
+    .pipe(browserSync.reload({stream: true}));
 
   /*
   * Uglify JS libs and move to dist folder
@@ -104,7 +105,8 @@ gulp.task('scripts', () => {
       suffix: '.min',
     }))
     .on('error', util.log)
-    .pipe(gulp.dest(paths.dist.libs));
+    .pipe(gulp.dest(paths.dist.libs))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('images', () => {
