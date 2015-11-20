@@ -18,7 +18,7 @@ const babel       = require('gulp-babel');
 var paths = {
   src: { root: 'src' },
   dist: { root: 'dist' },
-  init: () => {
+  init: function() {
     this.src.sass        = this.src.root + '/scss/main.scss';
     this.src.templates   = this.src.root + '/**/*.hbs';
     this.src.javascript  = [this.src.root + '/js/**/*.js', '!' + this.src.root + '/js/libs/*.js'];
