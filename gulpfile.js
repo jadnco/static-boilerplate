@@ -19,17 +19,14 @@ var paths = {
   src: { root: 'src' },
   dist: { root: 'dist' },
   init: function() {
-    this.src.sass        = this.src.root + '/scss/main.scss';
-    this.src.templates   = this.src.root + '/**/*.hbs';
-    this.src.javascript  = [this.src.root + '/js/**/*.js', '!' + this.src.root + '/js/libs/*.js'];
-    this.src.libs        = this.src.root + '/js/libs/*.js';
-    this.src.images      = this.src.root + '/images/**/*.{jpg,jpeg,svg,png,gif}';
-    this.src.files       = this.src.root + '/*.{html,txt}';
+    this.src.sass        = `${this.src.root}/scss/main.scss`;
+    this.src.js          = `${this.src.root}/scripts/**/*.js`;
+    this.src.images      = `${this.src.root}/images/**/*.{jpg,jpeg,svg,png,gif}`;
+    this.src.files       = `${this.src.root}/*.{html,txt}`;
 
-    this.dist.css        = this.dist.root + '/css';
-    this.dist.images     = this.dist.root + '/images';
-    this.dist.javascript = this.dist.root + '/js';
-    this.dist.libs       = this.dist.root + '/js/libs';
+    this.dist.css        = `${this.dist.root}/css`;
+    this.dist.images     = `${this.dist.root}/images`;
+    this.dist.javascript = `${this.dist.root}/js`;
 
     return this;
   },
@@ -61,51 +58,15 @@ gulp.task('styles', () => {
 });
 
 /*
-* Compile handlebars/partials into html
-*/
-gulp.task('templates', () => {
-  var opts = {
-    ignorePartials: true,
-    batch: ['src/partials'],
-  };
-
-  gulp.src([paths.src.root + '/*.hbs'])
-    .pipe(handlebars(null, opts))
-    .on('error', util.log)
-    .pipe(rename({
-      extname: '.html',
-    }))
-    .on('error', util.log)
-    .pipe(gulp.dest(paths.dist.root))
-    .pipe(browserSync.reload({stream: true}));
-});
-
-/*
 * Bundle all javascript files
 */
 gulp.task('scripts', () => {
-  gulp.src(paths.src.javascript)
+  gulp.src(paths.src.js)
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(concat('bundle.js'))
-    .on('error', util.log)
-    .pipe(uglify())
     .on('error', util.log)
     .pipe(gulp.dest(paths.dist.javascript))
-    .pipe(browserSync.reload({stream: true}));
-
-  /*
-  * Uglify JS libs and move to dist folder
-  */
-  gulp.src([paths.src.libs])
-    .pipe(uglify())
-    .on('error', util.log)
-    .pipe(rename({
-      suffix: '.min',
-    }))
-    .on('error', util.log)
-    .pipe(gulp.dest(paths.dist.libs))
     .pipe(browserSync.reload({stream: true}));
 });
 
@@ -127,10 +88,13 @@ watch(paths.src.files, () => {
   gulp.start('files');
 });
 
+watch(paths.src.js, () => {
+  gulp.start('scripts');
+});
+
 gulp.task('watch', () => {
   gulp.watch('src/scss/**/*.scss', ['styles']);
-  gulp.watch(paths.src.javascript, ['scripts']);
-  gulp.watch(paths.src.templates, ['templates']);
+  gulp.watch(paths.src.js, ['scripts']);
 });
 
 gulp.task('deploy', () => {
@@ -138,4 +102,4 @@ gulp.task('deploy', () => {
     .pipe(ghPages());
 });
 
-gulp.task('default', ['watch', 'serve', 'images', 'files', 'styles', 'scripts', 'templates']);
+gulp.task('default', ['watch', 'serve', 'images', 'files', 'styles', 'scripts']);
